@@ -33,8 +33,11 @@ RAG_PROJECT/
 ├── ingest.py                    ← Build ChromaDB vectorstore (run ONCE)
 ├── app.py                       ← Streamlit chat UI
 ├── lexassist_rag.ipynb          ← Full RAG pipeline notebook (learning)
+├── RAG_Full_architecture.svg    ← System architecture diagram
 ├── .env                         ← Your API keys (never commit this)
 ├── .env.example                 ← Template for .env
+├── requirements.txt             ← Python dependencies
+├── .gitignore                   ← Git ignore rules
 └── README.md
 ```
 
@@ -75,13 +78,13 @@ streamlit run app.py
 
 ---
 
-## 🔑 API Keys Required
+## 🏗️ Architecture Overview
 
 | Stage | Component | Tech Used |
 |-------|-----------|-----------|
 | 1 | Document Loading | `DirectoryLoader`, `PyPDFLoader` |
 | 2 | Text Chunking | `RecursiveCharacterTextSplitter` |
-| 3 | Embeddings | `BAAI/bge-large-en-v1.5` (local GPU) |
+| 3 | Embeddings | `BAAI/bge-large-en-v1.5` (HuggingFace) |
 | 4 | Vector Store | `ChromaDB` (persisted to disk) |
 | 5 | Basic RAG Chain | LangChain LCEL pipeline |
 | 6 | Advanced Retrieval | HyDE, Multi-Query, Contextual Compression |
@@ -95,8 +98,9 @@ streamlit run app.py
 
 ### Prerequisites
 - Python 3.10+
-- NVIDIA GPU (recommended) — RTX 3060 or higher
 - 8GB+ RAM
+- API keys: Groq (free) and HuggingFace (free)
+- Optional: NVIDIA GPU for faster local embeddings (otherwise uses HuggingFace API)
 
 ### Step 1 — Clone / Download the project
 ```bash
@@ -116,12 +120,12 @@ source venv/bin/activate
 
 ### Step 3 — Install dependencies
 ```bash
-pip install -r requirment.txt
+pip install -r requirements.txt
 ```
 
 ### Step 4 — Configure API Keys
 ```bash
-cp .env
+cp .env.example .env
 ```
 
 Open `.env` and fill in:
@@ -286,7 +290,7 @@ ChatPromptTemplate
 [system + chat_history + context + question]
      │
      ▼
-Groq LLM (llama3-8b-8192)
+Groq LLM (openai/gpt-oss-120b)
      │
      ▼
 Answer + Sources

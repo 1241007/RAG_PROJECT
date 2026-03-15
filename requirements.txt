@@ -1,0 +1,18 @@
+langchain==0.3.7
+langchain-core==0.3.7
+langchain-community==0.3.7
+langchain-huggingface
+langchain-chroma
+langchain-groq
+pypdf
+sentence-transformers
+huggingface-hub
+chromadb
+streamlit
+torch
+torchvision
+torchaudio --index-url https://download.pytorch.org/whl/cu121
+python-dotenv
+requests
+urllib3
+groq
